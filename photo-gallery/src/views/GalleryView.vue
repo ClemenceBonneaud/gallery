@@ -5,9 +5,12 @@
       { 'anim-go': goTime, '': !goTime },
     ]"
   >
+    <!-- Black circle -->
     <div
-      class="trans-cercle absolute top-[50%] left-[50%] rounded-[50%] w-[0px] h-[0px] translate-x-[-50%] translate-y-[-50%] hidden bg-g1"
+      class="trans-cercle absolute top-[50%] left-[50%] rounded-[50%] w-[0px] h-[0px] translate-x-[-50%] translate-y-[-50%] hidden bg-[#000017] z-10"
     ></div>
+
+    <!-- Spinner -->
     <div
       class="spinner anim-rotation"
       :class="[
@@ -19,9 +22,11 @@
       <span></span>
       <span></span>
     </div>
+
+    <!-- Go button-->
     <div
       @mousedown="isPressed = true"
-      @mouseup="[ isPressed = false, goTime = true ]"
+      @mouseup="[ isPressed = false, goTime = true, handleOpen() ]"
       @mouseleave="isPressed = false"
       :class="[
         { 'active bounce': isPressed, '': !isPressed },
@@ -29,6 +34,171 @@
       class="btn btn-go absolute top-[50%] left-[50%] w-[250px] h-[250px] translate-x-[-50%] translate-y-[-50%] flex items-center justify-center cursor-pointer"
     >
       <p class=" text-6xl text-light opacity-50 sp-bold drop-shadow-md">GO</p>
+    </div>
+
+    <!-- Northern lights -->
+    <div
+      ref="sky"
+      class="openning h-[100vh] w-[100vw]"
+      :class="[
+        { 'block': isOpen, 'hidden': !isOpen },
+      ]"
+    >
+
+      <!-- Rope 1 -->
+      <svg class="svg" viewBox="0 0 100 300">
+        <defs>
+          <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#04D1CB" />
+            <stop offset="75%" stop-color="#6CD2C3" />
+            <stop offset="100%" stop-color="#ADCD92" />
+          </linearGradient>
+          <linearGradient id="waveGradientAlternative" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#29135D" />
+            <stop offset="50%" stop-color="#29135D" />
+            <stop offset="55%" stop-color="#692A90" />
+            <stop offset="60%" stop-color="#692A90" />
+            <stop offset="100%" stop-color="#12074C" />
+          </linearGradient>
+        </defs>
+        <path
+          stroke="url(#waveGradient)"
+          d="M100,0 C30,150 -100,150 25,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M100,0 C30,150 -100,150 25,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M100,0 C30,150 -100,150 25,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M100,0 C30,150 -100,150 25,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative)"
+          d="M100,0 C30,150 -100,150 25,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative)"
+          d="M100,0 C30,150 -100,150 25,300"
+        />
+      </svg>
+
+      <!-- Rope 2 -->
+      <svg class="svg" viewBox="0 0 100 300">
+        <defs>
+          <linearGradient id="waveGradientAlternative2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#29135D" />
+            <stop offset="20%" stop-color="#692A90" />
+            <stop offset="25%" stop-color="#29135D" />
+            <stop offset="50%" stop-color="#12074C" />
+            <stop offset="62%" stop-color="#692A90" />
+            <stop offset="67%" stop-color="#12074C" />
+            <stop offset="100%" stop-color="#12074C" />
+          </linearGradient>
+        </defs>
+        <path
+          stroke="url(#waveGradient)"
+          d="M300,-10 C150,150 -1,110 50,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M300,-10 C150,150 -1,110 50,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M300,-10 C150,150 -1,110 50,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M300,-10 C150,150 -1,110 50,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative2)"
+          d="M300,-10 C150,150 -1,110 50,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative2)"
+          d="M300,-10 C150,150 -1,110 50,300"
+        />
+      </svg>
+
+      <!-- Rope 3 -->
+      <svg class="svg" viewBox="0 0 100 300">
+        <defs>
+          <linearGradient id="waveGradientAlternative3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#29135D" />
+            <stop offset="20%" stop-color="#29135D" />
+            <stop offset="30%" stop-color="#692A90" />
+            <stop offset="40%" stop-color="#12074C" />
+            <stop offset="100%" stop-color="#12074C" />
+          </linearGradient>
+        </defs>
+        <path
+          stroke="url(#waveGradient)"
+          d="M-50,0 C0,150 -200,110 -50,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M-50,0 C0,150 -200,110 -50,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M-50,0 C0,150 -200,110 -50,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M-50,0 C0,150 -200,110 -50,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative3)"
+          d="M-50,0 C0,150 -200,110 -50,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative3)"
+          d="M-50,0 C0,150 -200,110 -50,300"
+        />
+      </svg>
+
+      <!-- Rope 4 -->
+      <svg class="svg" viewBox="0 0 100 300">
+        <defs>
+          <linearGradient id="waveGradientAlternative4" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#29135D" />
+            <stop offset="70%" stop-color="#29135D" />
+            <stop offset="75%" stop-color="#692A90" />
+            <stop offset="90%" stop-color="#12074C" />
+            <stop offset="100%" stop-color="#12074C" />
+          </linearGradient>
+        </defs>
+        <path
+          stroke="url(#waveGradient)"
+          d="M400,50 C900,150 0,110 200,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M400,50 C900,150 0,110 200,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M400,50 C900,150 0,110 200,300"
+        />
+        <path
+          stroke="url(#waveGradient)"
+          d="M400,50 C900,150 0,110 200,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative4)"
+          d="M400,50 C900,150 0,110 200,300"
+        />
+        <path
+          stroke="url(#waveGradientAlternative4)"
+          d="M400,50 C900,150 0,110 200,300"
+        />
+      </svg>
     </div>
     
   </main>
@@ -39,6 +209,49 @@ import { ref } from 'vue'
 
 const isPressed = ref(false)
 const goTime = ref(false)
+const isOpen = ref(false)
+const sky = ref(null)
+
+const handleOpen = () => {
+  setTimeout(() => {
+    isOpen.value = true
+    createStars(150)
+  }, 1000)
+}
+
+const colors = ['g8', 'light', '#692A90', '#29135D', '#04D1CB', '#6CD2C3', '#ADCD92']
+
+const getRandomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)]
+}
+
+const createStars = (numStars) => {
+  if (!sky.value) return
+
+  for (let i = 0; i < numStars; i++) {
+    const star = document.createElement('div')
+    star.classList.add('star')
+    
+    // Taille
+    const size = Math.random() + 1 + 'px'
+    star.style.width = size
+    star.style.height = size
+    
+    // Position
+    const xPosition = Math.random() * window.innerWidth + 'px'
+    const yPosition = Math.random() * window.innerHeight + 'px'
+    star.style.left = xPosition
+    star.style.top = yPosition
+
+    // Couleur
+    star.style.backgroundColor = getRandomColor()
+    star.style.zIndex = -1
+    
+    
+    // Ajouter l'étoile au conteneur
+    sky.value.appendChild(star)
+  }
+}
 
 </script>
 
@@ -49,7 +262,7 @@ main.anim-go {
   }
   .trans-cercle {
     display: block;
-    animation: show_trans 0.5s ease-in forwards;
+    animation: show_trans 0.8s ease-in forwards;
     animation-delay: 0.5s;
   }
   .btn-go {
@@ -60,6 +273,12 @@ main.anim-go {
   }
 }
 
+.openning {
+  z-index: 5;
+  height: 100vh;
+  width: 100vw;
+  background: theme('colors.gradientNight');
+}
 .spinner {
   position: absolute;
   top: 50%;
@@ -122,6 +341,57 @@ main.anim-go {
   transform: scale(0.95)
 }
 
+.svg {
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 200px);
+  left: 50%;
+  transform: translateX(-50%);
+  fill: none;
+  path {
+    stroke-linecap: round;
+    fill: none;
+    &:nth-of-type(1) {
+      stroke-width: 2;
+      filter: blur(1px);
+      transform: translateY(-10px);
+    }
+    &:nth-of-type(2) {
+      stroke-width: 3;
+      filter: blur(2px);
+      transform: translateY(-12px);
+    }
+    &:nth-of-type(3) {
+      stroke-width: 5;
+      filter: blur(4px);
+      transform: translateY(-15px);
+    }
+    &:nth-of-type(4) {
+      stroke-width: 5;
+      filter: blur(7px);
+      transform: translateY(-20px);
+    }
+    &:nth-of-type(5) {
+      stroke-width: 5;
+      filter: blur(10px);
+      transform: translateY(-23px);
+    }
+    &:nth-of-type(6) {
+      stroke-width: 20;
+      filter: blur(15px);
+      transform: translateY(-35px);
+    }
+  }
+}
+
+.star {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: blink 2s infinite alternate, move 10s linear infinite;
+}
+
 @keyframes rotate_spinner {
   from {
     transform: translate(-50%, -50%) rotate(0deg);
@@ -151,9 +421,18 @@ main.anim-go {
     width: 0px;
     height: 0px;
   }
-  100% {
+
+  50% {
     width: 150vw;
     height: 150vw;
+    display: block;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    width: 150vw;
+    height: 150vw;
+    display: none;
   }
 }
 
