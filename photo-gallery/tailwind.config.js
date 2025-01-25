@@ -8,6 +8,7 @@ module.exports = {
         base: '#383343',
         dark: '#212027',
         gradient: 'linear-gradient(325deg, #0A0C08, #111312, #19191C, #212027, #28262F, #2F2D39, #383343, #474056)',
+        gradientNight: 'linear-gradient(220deg, #000017 70%, #29135D)',
         g1: '#0A0C08',
         g2: '#111312',
         g3: '#19191C',
@@ -16,8 +17,6 @@ module.exports = {
         g6: '#2F2D39',
         g7: '#383343',
         g8: '#474056',
-        'test-color': '#00F',
-        test: 'F00'
       },
       fontFamily: {
         sulphur: ['"Sulphur Point"', 'sans-serif'],
