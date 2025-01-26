@@ -1,13 +1,13 @@
 <template class="flex flex-col justify-center">
   <main
-    class="w-[90%] flex flex-col items-center ml-auto mr-auto bg-white"
+    class="w-full flex flex-col items-center ml-auto mr-auto bg-black"
     :class="[
       { 'anim-go': goTime, '': !goTime },
     ]"
   >
     <!-- Black circle -->
     <div
-      class="trans-cercle absolute top-[50%] left-[50%] rounded-[50%] w-[0px] h-[0px] translate-x-[-50%] translate-y-[-50%] hidden bg-[#000017] z-10"
+      class="trans-cercle absolute top-[50%] left-[50%] rounded-[50%] w-[0px] h-[0px] translate-x-[-50%] translate-y-[-50%] hidden bg-g1 z-10"
     ></div>
 
     <!-- Spinner -->
@@ -44,6 +44,15 @@
         { 'block': isOpen, 'hidden': !isOpen },
       ]"
     >
+
+      <div
+        @mouseenter="mountainUp = true"
+        @mouseleave="mountainUp = false"
+        @click="[ mountainGo = true, handleEnter() ]"
+        class="w-full absolute left-[50%] bottom-0 h-[225px] translate-x-[-50%] z-20 flex justify-center text-center cursor-pointer"
+      >
+        <p class=" text-5xl text-light sp-light tracking-[0.3em] w-[70%] mt-auto mb-auto">Under the northern lights</p>
+      </div>
 
       <!-- Rope 1 -->
       <svg class="svg" viewBox="0 0 100 300">
@@ -199,8 +208,16 @@
           d="M400,50 C900,150 0,110 200,300"
         />
       </svg>
-    </div>
-    
+
+      <!-- Horizon -->
+      <div
+        class="mountains absolute z-10 left-0 bottom-0 w-full transition-all duration-500"
+        :class="[
+          { 'h-[500px]': mountainUp, 'h-[400px]': !mountainUp },
+          { 'anim': mountainGo, '': !mountainGo },
+        ]"
+      ></div>
+    </div> 
   </main>
 </template>
 
@@ -211,12 +228,18 @@ const isPressed = ref(false)
 const goTime = ref(false)
 const isOpen = ref(false)
 const sky = ref(null)
+const mountainUp = ref(false)
+const mountainGo = ref(false)
 
 const handleOpen = () => {
   setTimeout(() => {
     isOpen.value = true
     createStars(150)
   }, 1000)
+}
+
+const handleEnter = () => {
+  mountainGo = true
 }
 
 const colors = ['g8', 'light', '#692A90', '#29135D', '#04D1CB', '#6CD2C3', '#ADCD92']
@@ -278,6 +301,7 @@ main.anim-go {
   height: 100vh;
   width: 100vw;
   background: theme('colors.gradientNight');
+  opacity: 0.5;
 }
 .spinner {
   position: absolute;
@@ -382,6 +406,18 @@ main.anim-go {
       transform: translateY(-35px);
     }
   }
+  &:nth-of-type(1) path {
+    animation: light_wave_path1 10s linear infinite;
+  }
+  &:nth-of-type(2) path {
+    animation: light_wave_path2 10s linear infinite;
+  }
+  &:nth-of-type(3) path {
+    animation: light_wave_path3 10s linear infinite;
+  }
+  &:nth-of-type(4) path {
+    animation: light_wave_path4 10s linear infinite;
+  }
 }
 
 .star {
@@ -391,6 +427,16 @@ main.anim-go {
   opacity: 0.8;
   animation: blink 2s infinite alternate, move 10s linear infinite;
 }
+
+.mountains {
+  background: theme('colors.gradientMount');
+  clip-path: polygon(0% 10%, 10% 0%, 15% 30%, 20% 20%, 25% 40%, 35% 30%, 40% 40%, 50% 25%, 60% 40%, 70% 35%, 75% 40%, 85% 25%, 90% 40%, 100% 30%, 100% 100%, 0% 100%);
+  &.anim {
+    animation: anim_mountain 2s ease-in forwards;
+  }
+}
+
+
 
 @keyframes rotate_spinner {
   from {
@@ -433,6 +479,65 @@ main.anim-go {
     width: 150vw;
     height: 150vw;
     display: none;
+  }
+}
+
+@keyframes light_wave_path1 {
+  5% {
+    d: path('M100,0 C30,150 -100,150 25,300');
+  }
+  25% {
+    d: path('M110,0 C50,110 -100,150 20,300');
+  }
+  45% {
+    d: path('M120,0 C70,70 -100,150 15,300');
+  }
+}
+@keyframes light_wave_path2 {
+  5% {
+    d: path('M300,-10 C150,150 -1,110 50,300');
+  }
+  25% {
+    d: path('M310,-10 C170,110 -1,110 45,300');
+  }
+  45% {
+    d: path('M320,-10 C190,70 -1,110 40,300');
+  }
+}
+@keyframes light_wave_path3 {
+  5% {
+    d: path('M-50,0 C0,150 -200,110 -50,300');
+  }
+  25% {
+    d: path('M-60,0 C10,150 -200,110 -45,300');
+  }
+  45% {
+    d: path('M-70,0 C20,150 -200,110 -40,300');
+  }
+}
+@keyframes light_wave_path4 {
+  5% {
+    d: path('M400,50 C900,150 0,110 200,300');
+  }
+  25% {
+    d: path('M410,50 C900,170 0,110 195,300');
+  }
+  45% {
+    d: path('M420,50 C900,190 0,110 190,300');
+  }
+}
+
+@keyframes anim_mountain {
+  0% {
+    clip-path: polygon(0% 10%, 10% 0%, 15% 30%, 20% 20%, 25% 40%, 35% 30%, 40% 40%, 50% 25%, 60% 40%, 70% 35%, 75% 40%, 85% 25%, 90% 40%, 100% 30%, 100% 100%, 0% 100%);
+  }
+  90% {
+    clip-path: polygon(0% 0%, 10% 0%, 20% 0%, 30% 0%, 40% 0%, 50% 0%, 60% 0%, 70% 0%, 80% 0%, 90% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: scale(4);
+  }
+  100% {
+    display: none;
+    height: 200vh;
   }
 }
 
