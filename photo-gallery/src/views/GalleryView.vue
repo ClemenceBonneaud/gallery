@@ -1,8 +1,9 @@
 <template class="flex flex-col justify-center">
   <main
-    class="w-full flex flex-col items-center ml-auto mr-auto bg-black"
+    class="w-full flex flex-col items-center ml-auto mr-auto transition-all duration-75 bg-black"
     :class="[
-      { 'anim-go': goTime, '': !goTime },
+      { 'anim-go': startLights, '': !startLights },
+      { 'anim-bg_gradient': !lightsOpen },
     ]"
   >
     <!-- Black circle -->
@@ -14,7 +15,7 @@
     <div
       class="spinner anim-rotation"
       :class="[
-        { 'stop-spinner': isPressed, '': !isPressed },
+        { 'stop-spinner': goBtnPressed, '': !goBtnPressed },
         ]"
     >
       <span></span>
@@ -25,33 +26,40 @@
 
     <!-- Go button-->
     <div
-      @mousedown="isPressed = true"
-      @mouseup="[ isPressed = false, goTime = true, handleOpen() ]"
-      @mouseleave="isPressed = false"
+      @mousedown="goBtnPressed = true"
+      @mouseup="[ goBtnPressed = false, startLights = true, handleLightStart() ]"
+      @mouseleave="goBtnPressed = false"
       :class="[
-        { 'active bounce': isPressed, '': !isPressed },
+        { 'active bounce': goBtnPressed, '': !goBtnPressed },
         ]"
-      class="btn btn-go absolute top-[50%] left-[50%] w-[250px] h-[250px] translate-x-[-50%] translate-y-[-50%] flex items-center justify-center cursor-pointer"
+      class="btn btn-go absolute top-[50%] left-[50%] w-[250px] h-[250px] translate-x-[-50%] translate-y-[-50%] flex items-center justify-center cursor-pointer text-center"
     >
-      <p class=" text-6xl text-light opacity-50 sp-bold drop-shadow-md">GO</p>
+      <p class=" text-6xl text-light opacity-50 sp-bold drop-shadow-md">Show me</p>
     </div>
 
     <!-- Northern lights -->
     <div
-      ref="sky"
+      ref="nightSky"
       class="openning h-[100vh] w-[100vw]"
       :class="[
-        { 'block': isOpen, 'hidden': !isOpen },
+        { 'block': lightsOpen, 'hidden': !lightsOpen },
+        { 'anim-fade_out': mountainGo, '': !mountainGo },
       ]"
     >
-
+    <!-- Text -->
       <div
         @mouseenter="mountainUp = true"
         @mouseleave="mountainUp = false"
-        @click="[ mountainGo = true, handleEnter() ]"
-        class="w-full absolute left-[50%] bottom-0 h-[225px] translate-x-[-50%] z-20 flex justify-center text-center cursor-pointer"
+        @click="[ mountainGo = true, handleLightOut() ]"
+        class="w-full absolute left-[50%] h-[400px] translate-x-[-50%] z-20 flex flex-col justify-center text-center cursor-pointer transition-all duration-500"
+        :class="{ 'bottom-[-80px] gap-10': mountainUp, 'bottom-[-190px] gap-20': !mountainUp }"
       >
-        <p class=" text-5xl text-light sp-light tracking-[0.3em] w-[70%] mt-auto mb-auto">Under the northern lights</p>
+        <p class="text-5xl text-light sp-light tracking-widest">
+          Hidden under the sky's lights
+        </p>
+        <p class="text-5xl text-light sp-light tracking-widest">
+          are all of nature's beauties
+        </p>
       </div>
 
       <!-- Rope 1 -->
@@ -224,32 +232,27 @@
 <script setup>
 import { ref } from 'vue'
 
-const isPressed = ref(false)
-const goTime = ref(false)
-const isOpen = ref(false)
-const sky = ref(null)
+const colors = ['g8', 'light', '#692A90', '#29135D', '#04D1CB', '#6CD2C3', '#ADCD92']
+const goBtnPressed = ref(false)
+const startLights = ref(false)
+const lightsOpen = ref(false)
+const nightSky = ref(null)
 const mountainUp = ref(false)
 const mountainGo = ref(false)
-
-const handleOpen = () => {
-  setTimeout(() => {
-    isOpen.value = true
-    createStars(150)
-  }, 1000)
-}
-
-const handleEnter = () => {
-  mountainGo = true
-}
-
-const colors = ['g8', 'light', '#692A90', '#29135D', '#04D1CB', '#6CD2C3', '#ADCD92']
 
 const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)]
 }
 
+const handleLightStart = () => {
+  setTimeout(() => {
+    lightsOpen.value = true
+    createStars(150)
+  }, 1000)
+}
+
 const createStars = (numStars) => {
-  if (!sky.value) return
+  if (!nightSky.value) return
 
   for (let i = 0; i < numStars; i++) {
     const star = document.createElement('div')
@@ -270,10 +273,15 @@ const createStars = (numStars) => {
     star.style.backgroundColor = getRandomColor()
     star.style.zIndex = -1
     
-    
-    // Ajouter l'étoile au conteneur
-    sky.value.appendChild(star)
+    nightSky.value.appendChild(star)
   }
+}
+
+const handleLightOut = () => {
+  mountainGo.value = true
+  setTimeout(() => {
+    lightsOpen.value = false
+  }, 500)
 }
 
 </script>
@@ -430,13 +438,15 @@ main.anim-go {
 
 .mountains {
   background: theme('colors.gradientMount');
-  clip-path: polygon(0% 10%, 10% 0%, 15% 30%, 20% 20%, 25% 40%, 35% 30%, 40% 40%, 50% 25%, 60% 40%, 70% 35%, 75% 40%, 85% 25%, 90% 40%, 100% 30%, 100% 100%, 0% 100%);
+  clip-path: polygon(0% 40%, 5% 30%, 10% 20%, 15% 30%, 20% 20%, 25% 40%, 35% 30%, 40% 40%, 50% 25%, 60% 40%, 70% 35%, 75% 40%, 85% 25%, 90% 40%, 100% 30%, 100% 100%, 0% 100%);
   &.anim {
-    animation: anim_mountain 2s ease-in forwards;
+    animation: anim_mountain 2s linear forwards;
   }
 }
 
-
+.anim-fade_out {
+  animation: fade_out 1s ease-in-out forwards;
+}
 
 @keyframes rotate_spinner {
   from {
@@ -531,14 +541,41 @@ main.anim-go {
   0% {
     clip-path: polygon(0% 10%, 10% 0%, 15% 30%, 20% 20%, 25% 40%, 35% 30%, 40% 40%, 50% 25%, 60% 40%, 70% 35%, 75% 40%, 85% 25%, 90% 40%, 100% 30%, 100% 100%, 0% 100%);
   }
-  90% {
+  70% {
     clip-path: polygon(0% 0%, 10% 0%, 20% 0%, 30% 0%, 40% 0%, 50% 0%, 60% 0%, 70% 0%, 80% 0%, 90% 0%, 100% 0%, 100% 100%, 0% 100%);
-    transform: scale(4);
+    transform: scale(20, 30);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+    transform: scale(20, 30);
   }
   100% {
+    opacity: 0;
     display: none;
-    height: 200vh;
+    transform: scale(20, 30);
   }
+}
+
+@keyframes fade_out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.5;
+    filter: blur(90px);
+  }
+}
+
+@keyframes bg_gradient {
+  50% {
+    background: black;
+  }
+  100% {
+    background: theme('colors.gradient');
+  }
+  
 }
 
 </style>
