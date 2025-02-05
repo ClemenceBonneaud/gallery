@@ -35,16 +35,16 @@ import { RouterLink, RouterView } from 'vue-router'
 
 .btn {
   border-radius: 50%;
-  background: linear-gradient(145deg, #3c3748, #322e3c);
-  box-shadow:  4px 4px 16px #16141b,
-              -4px -4px 16px #5a526b;
+  background: linear-gradient(145deg, #23222a, #1e1d23);
+  box-shadow:  4px 4px 16px #1c1b21,
+              -4px -4px 16px #26252d;
   transition: all 0.3s ease-in-out;
   &:hover {
-    background: linear-gradient(145deg, #322e3c, #3c3748);
+    background: linear-gradient(145deg, #1e1d23, #23222a);
   }
   &.active {
-    box-shadow: inset 4px 4px 16px #16141b,
-                inset -4px -4px 16px #5a526b;
+    box-shadow: inset 4px 4px 16px #1c1b21,
+                inset -4px -4px 16px #26252d;
   }
 }
 
