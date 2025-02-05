@@ -3,12 +3,28 @@
     class="w-full flex flex-col items-center ml-auto mr-auto transition-all duration-75 bg-black"
     :class="[
       { 'anim-go': startLights, '': !startLights },
-      { 'anim-bg_gradient': !lightsOpen },
     ]"
   >
-    <!-- Black circle -->
+    <img
+      src="/20241024_smoke01.jpg"
+      class="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay"
+      :class="{ 'hidden': isGallery }"
+    />
+
     <div
-      class="trans-cercle absolute top-[50%] left-[50%] rounded-[50%] w-[0px] h-[0px] translate-x-[-50%] translate-y-[-50%] hidden bg-g1 z-10"
+      class="absolute top-[10%] w-full text-center sp-light text-xl text-g8"
+      :class="[
+        { 'bloc': !startLights, 'hidden': startLights }
+      ]"
+    >
+      <p>So simple yet so hard: to stop, to breathe in the fresh air,</p>
+      <p>to feel the wind and the rain, to smell the pines, the moss, the sea.</p>
+      <p class="pt-5">Open your eyes, savour every image, for it is life’s purest gift.</p>
+    </div>
+
+    <!-- Black transition -->
+    <div
+      class="trans absolute w-full h-full translate-x-[-50%] translate-y-[-50%] hidden bg-g1 z-10"
     ></div>
 
     <!-- Spinner -->
@@ -30,11 +46,11 @@
       @mouseup="[ goBtnPressed = false, startLights = true, handleLightStart() ]"
       @mouseleave="goBtnPressed = false"
       :class="[
-        { 'active bounce': goBtnPressed, '': !goBtnPressed },
+        { 'bounce': goBtnPressed, '': !goBtnPressed },
         ]"
-      class="btn btn-go absolute top-[50%] left-[50%] w-[250px] h-[250px] translate-x-[-50%] translate-y-[-50%] flex items-center justify-center cursor-pointer text-center"
+      class="btn btn-go absolute top-[50%] left-[50%] w-[300px] h-[300px] translate-x-[-50%] translate-y-[-50%] flex items-center justify-center cursor-pointer text-center flex-col"
     >
-      <p class=" text-6xl text-light opacity-50 sp-bold drop-shadow-md">Show me</p>
+      <p class="sp-light text-5xl">Step in</p>
     </div>
 
     <!-- Northern lights -->
@@ -50,16 +66,16 @@
       <div
         @mouseenter="mountainUp = true"
         @mouseleave="mountainUp = false"
-        @click="[ mountainGo = true, handleLightOut() ]"
+        @click="[ mountainGo = true, handleLightOut(), isGallery = true ]"
         class="w-full absolute left-[50%] h-[400px] translate-x-[-50%] z-20 flex flex-col justify-center text-center cursor-pointer transition-all duration-500"
-        :class="{ 'bottom-[-80px] gap-10': mountainUp, 'bottom-[-190px] gap-20': !mountainUp }"
+        :class="{ 'bottom-[-60px] gap-5': mountainUp, 'bottom-[-110px] gap-10': !mountainUp }"
       >
-        <p class="text-5xl text-light sp-light tracking-widest">
-          Hidden under the sky's lights
-        </p>
-        <p class="text-5xl text-light sp-light tracking-widest">
-          are all of nature's beauties
-        </p>
+        <div class="mt-[40px]">
+          <p class="text-xl text-g8 sp-light">We draw, we paint, we sculpt, we try to capture the beauty that surrounds us</p>
+          <p class="text-xl text-g8 sp-light ">Yet nothing we create can ever compare to what simply is</p>
+        </div>
+        <p class="text-xl text-light sp-light tracking-widest">Step closer ...</p>
+        <p class="text-xl text-light sp-light tracking-widest">One last step</p>
       </div>
 
       <!-- Rope 1 -->
@@ -239,6 +255,7 @@ const lightsOpen = ref(false)
 const nightSky = ref(null)
 const mountainUp = ref(false)
 const mountainGo = ref(false)
+const isGallery = ref(false)
 
 const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)]
@@ -287,37 +304,33 @@ const handleLightOut = () => {
 </script>
 
 <style lang="scss">
-main.anim-go {
-  .spinner {
-    animation: hide_spinner 0.5s ease-in forwards;
-  }
-  .trans-cercle {
-    display: block;
-    animation: show_trans 0.8s ease-in forwards;
-    animation-delay: 0.5s;
-  }
-  .btn-go {
-    transform: all 0.5s ease-in;
-    width: 0px;
-    height: 0px;
-    display: none;
-  }
-}
 
-.openning {
-  z-index: 5;
-  height: 100vh;
-  width: 100vw;
-  background: theme('colors.gradientNight');
-  opacity: 0.5;
+// Landing page btn
+main {
+  &.anim-go {
+    .spinner {
+      animation: hide_spinner 0.5s linear forwards;
+    }
+    .trans {
+      display: block;
+      animation: show_trans 2s ease-in forwards;
+      transition: background-color 0.5s ease-out, filter 0.5s ease-out;
+    }
+    .btn-go {
+      transform: all 0.5s ease-in;
+      width: 0px;
+      height: 0px;
+      display: none;
+    }
+  }
 }
 .spinner {
   position: absolute;
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  height: 600px;
-  width: 600px;
+  height: 400px;
+  width: 400px;
   background: linear-gradient(theme('colors.g3'), theme('colors.g6'), theme('colors.g7'), theme('colors.light'));
   filter: blur(1px);
   box-shadow: 0px -5px 20px 0px theme('colors.g3'), 0px 5px 20px 0px theme('colors.g7'), theme('colors.light');
@@ -344,16 +357,16 @@ main.anim-go {
     width: 100%;
     background: linear-gradient(theme('colors.g5'), theme('colors.g7'), theme('colors.g8'), theme('colors.light'));
     &:nth-of-type(1) {
-      filter: blur(5px);
+      filter: blur(2px);
     }
     &:nth-of-type(2) {
-      filter: blur(10px);
+      filter: blur(5px);
     }
     &:nth-of-type(3) {
-      filter: blur(25px);
+      filter: blur(10px);
     }
     &:nth-of-type(4) {
-      filter: blur(50px);
+      filter: blur(25px);
     }
   }
   &::after {
@@ -363,14 +376,25 @@ main.anim-go {
     left: 15px;
     right: 15px;
     bottom: 15px;
-    background: radial-gradient(theme('colors.g5') 55%, theme('colors.g3') 100%);
+    background: theme('colors.g4');
     border-radius: 50%;
   }
 }
 
-.bounce p {
-  transition: all 0.05s ease-in-out;
-  transform: scale(0.95)
+.bounce {
+  p {
+    transition: all 0.05s ease-in-out;
+    transform: scale(0.95)
+  }
+}
+
+// Northern lights
+.openning {
+  z-index: 5;
+  height: 100vh;
+  width: 100vw;
+  background: theme('colors.gradientNight');
+  opacity: 0.5;
 }
 
 .svg {
@@ -440,7 +464,7 @@ main.anim-go {
   background: theme('colors.gradientMount');
   clip-path: polygon(0% 40%, 5% 30%, 10% 20%, 15% 30%, 20% 20%, 25% 40%, 35% 30%, 40% 40%, 50% 25%, 60% 40%, 70% 35%, 75% 40%, 85% 25%, 90% 40%, 100% 30%, 100% 100%, 0% 100%);
   &.anim {
-    animation: anim_mountain 2s linear forwards;
+    animation: anim_mountain 3s linear forwards;
   }
 }
 
@@ -448,6 +472,9 @@ main.anim-go {
   animation: fade_out 1s ease-in-out forwards;
 }
 
+//// Animations ////
+
+// Landing page btn
 @keyframes rotate_spinner {
   from {
     transform: translate(-50%, -50%) rotate(0deg);
@@ -469,29 +496,51 @@ main.anim-go {
   }
   100% {
     display: none;
+    width: 10px;
+    height: 10px;
   }
 }
 
 @keyframes show_trans {
   0% {
-    width: 0px;
-    height: 0px;
+    filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    height: 100vh;
+    width: 100vw;
   }
-
-  50% {
-    width: 150vw;
-    height: 150vw;
-    display: block;
+  25% {
+    filter: blur(0px);
+    background-color: rgba(0, 0, 0, 1);
     opacity: 1;
+    height: 110vh;
+    width: 110vw;
+  }
+  35% {
+    filter: blur(10px);
+    background-color: rgba(0, 0, 0, 1);
+    opacity: 1;
+    height: 110vh;
+    width: 110vw;
+  }
+  99% {
+    display: block;
   }
   100% {
-    opacity: 0;
-    width: 150vw;
-    height: 150vw;
+    filter: blur(0px);
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    width: 100vw;
     display: none;
   }
 }
 
+// Northern lights
 @keyframes light_wave_path1 {
   5% {
     d: path('M100,0 C30,150 -100,150 25,300');
@@ -566,16 +615,6 @@ main.anim-go {
     opacity: 0.5;
     filter: blur(90px);
   }
-}
-
-@keyframes bg_gradient {
-  50% {
-    background: black;
-  }
-  100% {
-    background: theme('colors.gradient');
-  }
-  
 }
 
 </style>
