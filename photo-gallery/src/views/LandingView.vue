@@ -71,8 +71,8 @@
         :class="{ 'bottom-[-60px] gap-5': mountainUp, 'bottom-[-110px] gap-10': !mountainUp }"
       >
         <div class="mt-[40px]">
-          <p class="text-xl text-g8 sp-light">We draw, we paint, we sculpt, we try to capture the beauty that surrounds us</p>
-          <p class="text-xl text-g8 sp-light ">Yet nothing we create can ever compare to what simply is</p>
+          <p class="text-l text-light sp-light">We draw, we paint, we sculpt, we try to capture the beauty that surrounds us</p>
+          <p class="text-l text-light sp-light ">Yet nothing we create can ever compare to what simply is</p>
         </div>
         <p class="text-xl text-light sp-light tracking-widest">Step closer ...</p>
         <p class="text-xl text-light sp-light tracking-widest">One last step</p>
@@ -247,6 +247,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const colors = ['g8', 'light', '#692A90', '#29135D', '#04D1CB', '#6CD2C3', '#ADCD92']
 const goBtnPressed = ref(false)
@@ -298,6 +301,7 @@ const handleLightOut = () => {
   mountainGo.value = true
   setTimeout(() => {
     lightsOpen.value = false
+    router.push({ name: 'home' })
   }, 500)
 }
 
